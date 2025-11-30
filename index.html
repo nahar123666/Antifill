@@ -1,66 +1,857 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اطارك - منصة الكفرات والزيوت للمحلات</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f5f5f5;
-            color: #222;
-        }
-        header {
-            background: #000;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .section {
-            padding: 25px;
-            background: #fff;
-            margin: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-        .btn {
-            display: block;
-            width: 90%;
-            margin: 20px auto;
-            padding: 15px;
-            text-align: center;
-            background: #000;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>اطارك | منصة الكفرات والزيوت للمحلات والموردين</title>
+  <meta name="description" content="اطارك - منصة تربط محلات الكفرات والزيوت والبطاريات مع الموردين في السعودية. طلبات منظمة، أسعار جملة، وتسهيل للآجل.">
+  <style>
+    :root {
+      --primary: #e02121;      /* أحمر سباق */
+      --primary-dark: #b41717;
+      --bg: #f5f5f7;
+      --text: #16181d;
+      --muted: #6b7280;
+      --card: #ffffff;
+      --border: #e5e7eb;
+      --radius: 14px;
+      --shadow-soft: 0 14px 35px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    header {
+      background-color: #ffffff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 6px rgba(15,23,42,0.06);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 25%, #ffffff 0, #fca5a5 25%, var(--primary) 55%, #111827 90%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px rgba(220, 38, 38, 0.5);
+      position: relative;
+    }
+
+    .logo-icon::before {
+      content: "";
+      position: absolute;
+      width: 64%;
+      height: 64%;
+      border-radius: 50%;
+      border: 2px solid rgba(248,250,252,0.85);
+      box-shadow: inset 0 0 0 2px rgba(15,23,42,0.7);
+      transform: rotate(-18deg);
+    }
+
+    .logo-text-main {
+      font-weight: 800;
+      font-size: 1.2rem;
+      letter-spacing: 0.04em;
+    }
+
+    .logo-text-sub {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), #f97373);
+      color: #ffffff;
+      font-weight: 600;
+      box-shadow: 0 12px 30px rgba(220,38,38,0.35);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    main {
+      padding-bottom: 40px;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 26px 0 32px;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 28px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background-color: #fee2e2;
+      color: var(--primary-dark);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      margin-bottom: 8px;
+    }
+
+    .hero-badge span {
+      font-size: 0.9rem;
+    }
+
+    .hero-title {
+      font-size: clamp(1.9rem, 3vw, 2.3rem);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .hero-title span {
+      color: var(--primary);
+    }
+
+    .hero-subtitle {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 18px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .hero-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+      font-size: 0.78rem;
+    }
+
+    .hero-tag {
+      background-color: #f3f4f6;
+      padding: 3px 8px;
+      border-radius: 999px;
+      color: var(--muted);
+    }
+
+    .hero-visual {
+      background: radial-gradient(circle at 30% 0, #fee2e2 0, #f4f4f5 50%, #e5e7eb 100%);
+      border-radius: 24px;
+      padding: 18px;
+      min-height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-card {
+      background-color: var(--card);
+      border-radius: 18px;
+      padding: 16px;
+      width: 100%;
+      max-width: 340px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(248, 113, 113, 0.2);
+    }
+
+    .hero-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .hero-card-title {
+      font-weight: 700;
+      font-size: 0.98rem;
+    }
+
+    .hero-card-pill {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background-color: #fee2e2;
+      color: var(--primary-dark);
+    }
+
+    .hero-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      font-size: 0.78rem;
+      margin-top: 6px;
+    }
+
+    .hero-card-item {
+      background-color: #f9fafb;
+      border-radius: 10px;
+      padding: 7px;
+    }
+
+    .hero-card-item strong {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 0.82rem;
+    }
+
+    /* Sections */
+    section {
+      padding: 26px 0;
+    }
+
+    section:nth-of-type(even) {
+      background-color: #ffffff;
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+    }
+
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background-color: var(--card);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow-soft);
+      font-size: 0.9rem;
+      border: 1px solid rgba(229,231,235,0.9);
+    }
+
+    .card h3 {
+      font-size: 0.98rem;
+      margin-bottom: 6px;
+    }
+
+    .card-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background-color: #fee2e2;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+    }
+
+    .cols-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 22px;
+    }
+
+    .list {
+      list-style: none;
+      display: grid;
+      gap: 6px;
+      font-size: 0.9rem;
+    }
+
+    .list li::before {
+      content: "•";
+      margin-left: 6px;
+      color: var(--primary);
+    }
+
+    .pill {
+      display: inline-block;
+      background-color: #f3f4f6;
+      color: var(--muted);
+      font-size: 0.78rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+
+    /* Gallery-style images (بلايس هولدر) */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .gallery-item {
+      border-radius: 12px;
+      height: 90px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-1 {
+      background-image: linear-gradient(135deg, #111827, #4b5563);
+    }
+    .gallery-2 {
+      background-image: linear-gradient(135deg, #7f1d1d, #f97373);
+    }
+    .gallery-3 {
+      background-image: linear-gradient(135deg, #0f172a, #1e293b);
+    }
+
+    .gallery-label {
+      position: absolute;
+      bottom: 6px;
+      right: 8px;
+      font-size: 0.75rem;
+      color: #f9fafb;
+      background-color: rgba(15,23,42,0.75);
+      padding: 2px 6px;
+      border-radius: 999px;
+    }
+
+    /* FAQ */
+    .faq {
+      display: grid;
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+
+    .faq-item {
+      background-color: var(--card);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(229,231,235,0.9);
+    }
+
+    .faq-item h3 {
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    /* Contact */
+    .contact-card {
+      background-color: var(--card);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+      max-width: 640px;
+      border: 1px solid rgba(229,231,235,0.95);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.85rem;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    input, select, textarea {
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      font-size: 0.9rem;
+      outline: none;
+      background-color: #f9fafb;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 1px rgba(220,38,38,0.18);
+      background-color: #ffffff;
+    }
+
+    footer {
+      padding: 16px 0 20px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+      }
+      .hero-inner {
+        grid-template-columns: minmax(0,1fr);
+      }
+      .hero-visual {
+        order: -1;
+      }
+      .cards-3 {
+        grid-template-columns: minmax(0,1fr);
+      }
+      .cols-2 {
+        grid-template-columns: minmax(0,1fr);
+      }
+      .gallery {
+        grid-template-columns: repeat(3, minmax(0,1fr));
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        padding-top: 20px;
+      }
+      .form-grid {
+        grid-template-columns: minmax(0,1fr);
+      }
+      .gallery {
+        grid-template-columns: minmax(0,1fr);
+      }
+    }
+  </style>
 </head>
 <body>
 
-<header>اطارك</header>
+<header>
+  <div class="container">
+    <nav class="nav">
+      <div class="logo-wrap">
+        <div class="logo-icon"></div>
+        <div>
+          <div class="logo-text-main">اطارك</div>
+          <div class="logo-text-sub">منصة الكفرات والزيوت للمحلات والموردين</div>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="#shops">للمحلات</a>
+        <a href="#suppliers">للموردين</a>
+        <a href="#how">كيف نعمل</a>
+        <a href="#about">من نحن</a>
+        <a href="#contact">تواصل معنا</a>
+      </div>
+      <button class="btn btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+        تواصل معنا
+      </button>
+    </nav>
+  </div>
+</header>
 
-<div class="section">
-    <h2>منصة بيع الكفرات والزيوت للمحلات</h2>
-    <p>اطارك تربط الموردين بمحلات الكفرات والزيوت في السعودية — أسعار جملة، توصيل سريع، وطلب أونلاين بسهولة.</p>
-</div>
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div>
+        <div class="hero-badge">
+          <span>⚡</span> منصة B2B متخصصة لقطاع الكفرات والزيوت في السعودية
+        </div>
+        <h1 class="hero-title">
+          اطلب <span>الكفرات والزيوت والبطاريات</span> لمحلّك من موردين متعددين في مكان واحد.
+        </h1>
+        <p class="hero-subtitle">
+          <strong>اطارك</strong> تربط محلات الكفرات والزيوت والورش مع أفضل الموردين في السوق،
+          وتخلي الطلب من مورد واحد أو عشرة موردين أسهل من رسالة واتساب.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+            أبدأ كتاجر كفرات / زيوت
+          </button>
+          <button class="btn btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+            انضم كمورد / مستورد
+          </button>
+        </div>
+        <p class="hero-note">
+          الإطلاق الأول في <strong>الرياض</strong> مع خطة للتوسع لباقي المدن حسب الطلب.
+        </p>
+        <div class="hero-tags">
+          <span class="hero-tag">كفرات سيارات</span>
+          <span class="hero-tag">زيوت</span>
+          <span class="hero-tag">بطاريات</span>
+          <span class="hero-tag">ورش ومحلات كفرات</span>
+        </div>
+      </div>
 
-<div class="section">
-    <h3>المميزات</h3>
-    <ul>
-        <li>توفر أسعار مباشرة من الموردين</li>
-        <li>توصيل سريع لنفس اليوم</li>
-        <li>طلب سهل بدون واتساب واتصالات</li>
-        <li>دعم كامل للمحلات</li>
-    </ul>
-</div>
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <div class="hero-card-title">لوحة اطارك التجريبية</div>
+            <div class="hero-card-pill">نموذج أولي</div>
+          </div>
+          <p style="font-size:0.82rem; color:var(--muted); margin-bottom:8px;">
+            مثال توضيحي لشكل النظام لما يكبر اطارك ويصير يدير طلباتك اليومية.
+          </p>
+          <div class="hero-card-grid">
+            <div class="hero-card-item">
+              <strong>طلبات اليوم</strong>
+              <span>١٤ طلب من محلات كفرات وزيوت في الرياض.</span>
+            </div>
+            <div class="hero-card-item">
+              <strong>موردين نشطين</strong>
+              <span>٦ موردين حدّثوا الأسعار وحالة المخزون.</span>
+            </div>
+            <div class="hero-card-item">
+              <strong>متوسط الفاتورة</strong>
+              <span>٥٬٩٠٠ ريال لكل طلب مركّب.</span>
+            </div>
+            <div class="hero-card-item">
+              <strong>نسبة الالتزام</strong>
+              <span>٩٣٪ من الفواتير مسددة في وقتها.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<a class="btn" href="https://wa.me/966500000000">اطلب الآن عبر واتساب</a>
+  <!-- لماذا اطارك -->
+  <section>
+    <div class="container">
+      <h2 class="section-title">ليش اطارك؟</h2>
+      <p class="section-subtitle">
+        لأن قطاع الكفرات والزيوت يحتاج منصة متخصصة، مو حل عام للجميع.
+      </p>
+      <div class="cards-3">
+        <div class="card">
+          <div class="card-icon">🛞</div>
+          <h3>متخصصين في الكفرات والزيوت</h3>
+          <p>
+            تركيزنا على قطاع السيارات (كفرات، زيوت، بطاريات) يخلي تجربتك أبسط
+            وأقرب لواقع الورش ومحلات الكفرات من أي منصة عامة.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📦</div>
+          <h3>كل الموردين في مكان واحد</h3>
+          <p>
+            بدل ما تطلب من ٥–٦ موردين بالهاتف والواتساب، تقدر تشوف عروضهم
+            وترتّب طلباتك من واجهة واحدة.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⏱️</div>
+          <h3>توفير وقتك وتركيزك</h3>
+          <p>
+            هدف اطارك أنك تركّز على شغلك في الورشة أو المحل، وتخلي علينا
+            ترتيب الطلبات بينك وبين الموردين.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- كيف نعمل -->
+  <section id="how">
+    <div class="container">
+      <h2 class="section-title">كيف تعمل اطارك؟</h2>
+      <p class="section-subtitle">
+        نبدأ بساطة، ونكبر معك خطوة بخطوة – بدون تعقيد تقني من اليوم الأول.
+      </p>
+      <div class="cards-3">
+        <div class="card">
+          <div class="card-icon">١</div>
+          <h3>تسجيل بسيط</h3>
+          <p>
+            تعبّي بيانات المحل أو المورد في النموذج بالأسفل،
+            وفريق اطارك يتواصل معك لتفعيل حسابك وتأكيد معلوماتك.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-icon">٢</div>
+          <h3>رفع المنتجات أو طلبها</h3>
+          <p>
+            المورد يرفع أنواع الكفرات والزيوت والبطاريات، ومحلات الكفرات
+            والورش تطلب المقاسات والأنواع اللي تحتاجها.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-icon">٣</div>
+          <h3>توصيل وتنفيذ</h3>
+          <p>
+            الطلب يوصل للمورد الأنسب، وهو اللي يجهز ويشحن البضاعة
+            للموقع المتّفق عليه. اطارك تنظّم وترتّب العملية.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- للمحلات -->
+  <section id="shops">
+    <div class="container cols-2">
+      <div>
+        <h2 class="section-title">لـ محلات الكفرات والزيوت والورش</h2>
+        <p class="section-subtitle">
+          خلك مشغول بعملائك… وخلي ترتيب الطلبات بين الموردين علينا.
+        </p>
+        <ul class="list">
+          <li>منصة واحدة لطلب الكفرات والزيوت والبطاريات من عدة موردين.</li>
+          <li>تخفيف الاتصالات والواتساب بينك وبين أكثر من مندوب.</li>
+          <li>إمكانية مقارنة الأسعار والماركات على المدى القادم.</li>
+          <li>تاريخ لطلباتك السابقة يساعدك تعرف احتياج محلك الحقيقي.</li>
+          <li>قابلية إضافة حلول آجل وتنظيم سداد مستقبلاً بشكل منظم.</li>
+        </ul>
+      </div>
+      <div>
+        <span class="pill">تصوّر مبدئي</span>
+        <p style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;">
+          في البداية، الطلبات تتم عن طريق النموذج والتواصل المباشر من فريق اطارك،
+          بعدها نطلق لوحة تحكم خاصة للمحلات والموردين مع ازدياد عدد المستخدمين.
+        </p>
+        <div class="gallery">
+          <div class="gallery-item gallery-1">
+            <div class="gallery-label">محل كفرات</div>
+          </div>
+          <div class="gallery-item gallery-2">
+            <div class="gallery-label">ورشة سيارات</div>
+          </div>
+          <div class="gallery-item gallery-3">
+            <div class="gallery-label">زيوت وبطاريات</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- للموردين -->
+  <section id="suppliers">
+    <div class="container cols-2">
+      <div>
+        <h2 class="section-title">للموردين والمستوردين</h2>
+        <p class="section-subtitle">
+          اطارك يساعدك تزيد مبيعاتك وترتّب عملاءك من المحلات والورش.
+        </p>
+        <ul class="list">
+          <li>وصول مباشر لعشرات محلات الكفرات والزيوت في مدينتك.</li>
+          <li>طلبات أوضح بدل الرسائل المتفرقة.</li>
+          <li>معرفة أفضل العملاء التزامًا على المدى الطويل.</li>
+          <li>إمكانية إطلاق عروض على ماركات أو مقاسات محددة.</li>
+          <li>فتح باب لحلول تمويل الفواتير وتنظيم الآجل مستقبلاً.</li>
+        </ul>
+      </div>
+      <div>
+        <span class="pill">بدون تغيير نظام عملك الحالي</span>
+        <p style="font-size:0.9rem; color:var(--muted); margin-bottom:8px;">
+          في النسخة الأولى، تظل تصدر فواتيرك وتستلم مبالغك بالطريقة
+          اللي مناسبة لك، واطارك فقط يجمع لك الطلبات من عملاء جدد
+          وينظم التواصل مع الموجودين.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- من نحن -->
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">من نحن؟</h2>
+      <p class="section-subtitle">
+        اطارك مشروع سعودي يهدف لتنظيم سوق الكفرات والزيوت بين الموردين والمحلات
+        باستخدام منصات رقمية بسيطة وواضحة.
+      </p>
+      <div class="cols-2">
+        <p style="font-size:0.9rem;">
+          بدأنا من ملاحظة واقع السوق اليوم: محلات كفرات وزيوت تعتمد على اتصالات
+          وواتساب ودفاتر ورقية لطلب الكميات من الموردين، وموردين يعانون من صعوبة
+          متابعة طلبات العملاء والتحصيل وتوقع الاحتياج.
+          <br><br>
+          رؤيتنا أن يكون <strong>اطارك</strong> هو المنصة المتخصصة لهذا القطاع:
+          نعرف تفاصيله، إيقاعه اليومي، وطريقة تفكير العاملين فيه، ونبني حلول
+          تمشي مع الواقع بدل ما نفرض عليه تعقيد تقني لا يناسبه.
+        </p>
+        <p style="font-size:0.9rem;">
+          اطارك في مرحلته الأولى سيكون:
+          <br>
+          - منصة ربط وطلب بين الموردين والمحلات.<br>
+          - ثم لوحة تحكم تتابع طلباتك وفواتيرك.<br>
+          - ثم (مع الوقت) حلول آجل وتمويل فواتير مدروسة ومحسوبة.
+          <br><br>
+          لو عندك اهتمام تكون من أوّل الشركاء (كمحل أو مورد)،
+          تقدر تعبّي النموذج في الأسفل، وراح يتم التواصل معك.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="container">
+      <h2 class="section-title">أسئلة متكررة</h2>
+      <p class="section-subtitle">بعض الأسئلة اللي ممكن تجي في بالك قبل التسجيل.</p>
+      <div class="faq">
+        <div class="faq-item">
+          <h3>هل اطارك يبيع للأفراد (مستهلك نهائي)؟</h3>
+          <p>لا. اطارك منصة B2B بين الموردين ومحلات الكفرات والزيوت والورش فقط، وليست منصة بيع بالتجزئة للأفراد.</p>
+        </div>
+        <div class="faq-item">
+          <h3>هل اطارك يخزن الكفرات والزيوت؟</h3>
+          <p>في المرحلة الحالية لا. المورد هو اللي يجهز الطلب ويشحنه مباشرة للعميل. مستقبلًا يمكن دراسة حلول تخزين وتوزيع إضافية حسب الحاجة.</p>
+        </div>
+        <div class="faq-item">
+          <h3>هل فيه آجل عن طريق اطارك؟</h3>
+          <p>في البداية التركيز على تنظيم الطلبات. حلول الآجل وتمويل الفواتير تتم دراستها بحيث تخدم الطرفين بشكل آمن ومنظم عند توسع المنصة.</p>
+        </div>
+        <div class="faq-item">
+          <h3>وين تعملون حاليًا؟</h3>
+          <p>مرحلة الإطلاق الأول ستكون في مدينة الرياض، مع نية التوسع لبقية المدن لاحقًا وفقًا لتجاوب السوق.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">ودك تنضم للإطلاق الأول لـ اطارك؟</h2>
+      <p class="section-subtitle">
+        عبّ البيانات التالية، واذكر إذا كنت <strong>محل كفرات/زيوت/ورشة</strong> أو <strong>مورد</strong>،
+        وراح نتواصل معك لتأكيد المعلومات.
+      </p>
+      <div class="contact-card">
+        <!-- ملاحظة: تحتاج تربط النموذج بخدمة حقيقية في النسخة العملية -->
+        <form>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="name">الاسم / اسم المحل</label>
+              <input id="name" type="text" placeholder="مثال: ورشة اطارات الرياض" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">رقم الجوال</label>
+              <input id="phone" type="tel" placeholder="05XXXXXXXX" required>
+            </div>
+            <div class="form-group">
+              <label for="city">المدينة</label>
+              <input id="city" type="text" placeholder="الرياض">
+            </div>
+            <div class="form-group">
+              <label for="type">نوع النشاط</label>
+              <select id="type">
+                <option value="">اختر نوع النشاط</option>
+                <option value="shop">محل كفرات / زيوت</option>
+                <option value="workshop">ورشة سيارات</option>
+                <option value="supplier">مورد / مستورد</option>
+                <option value="other">أخرى</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label for="message">وش تبي من اطارك؟ (رسالة مختصرة)</label>
+              <textarea id="message" placeholder="مثال: أبغى أرتّب طلبات الكفرات والزيوت عندي وأتعامل مع موردين أكثر عن طريق المنصة."></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            إرسال الطلب المبدئي
+          </button>
+          <a href="https://wa.me/966500000000" class="btn btn-outline" style="margin-top:8px; display:inline-flex;">
+            أو تواصل معنا مباشرة عبر واتساب
+          </a>
+          <p style="font-size:0.78rem; color:var(--muted); margin-top:8px;">
+            هذا نموذج مبدئي للتسجيل فقط. فريق اطارك سيتواصل معك هاتفيًا لتأكيد البيانات قبل تفعيل الحساب.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    اطارك &copy; <span id="year"></span> – منصة متخصصة لربط محلات الكفرات والزيوت بالموردين في السعودية.
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 
 </body>
 </html>
